@@ -7,24 +7,26 @@ worth, when a trading signal is real, and how renewables reshape the prices they
 depend on.
 
 **Focus areas:** power markets (day-ahead and intraday), battery storage
-economics, optimization (MILP), time-series forecasting, and market analytics.
+economics, optimization (MILP), PV and renewable modelling, time-series
+forecasting, and market analytics.
 
-**Toolbox:** Python, pandas, NumPy, scikit-learn, PuLP, matplotlib, seaborn,
-Streamlit.
+**Toolbox:** Python, pandas, NumPy, scikit-learn, PuLP, pvlib, matplotlib,
+seaborn, Streamlit.
 
 ---
 
 ## Selected projects
 
-All three run end to end on real, free German market data from
-[SMARD.de](https://www.smard.de/en), come with tests, and document their
-assumptions.
+All four run end to end on real, free European data (mainly
+[SMARD.de](https://www.smard.de/en) and PVGIS), come with tests, and document
+their assumptions.
 
 | Project | What it does | Headline result |
 |---|---|---|
 | [BESS Day-Ahead Dispatch Optimizer](https://github.com/CodingxFaisal/bess-dispatch-optimizer) | MILP optimization of a grid-scale battery trading day-ahead arbitrage | A gradient-boosting price forecast captures **84.5%** of the perfect-foresight revenue ceiling |
 | [Power Spread Trader](https://github.com/CodingxFaisal/power-spread-trader) | Backtest of a cross-border spread mean-reversion strategy, with an honest test of whether the edge is real and realizable | Out-of-sample **Sharpe 5.45**, bounded by tradability rather than cost |
 | [Renewable Price Cannibalization](https://github.com/CodingxFaisal/renewable-cannibalization) | Analysis and dashboard of how solar and wind erode their own market value | Solar value factor falls from **0.93 (2019) to 0.59 (2024)** |
+| [PV Market Value](https://github.com/CodingxFaisal/pv-market-value) | Values PV plant designs against day-ahead prices, comparing energy yield with revenue | A single-axis tracker earns **~15% more revenue** than the yield-optimal fixed array |
 
 ### BESS Day-Ahead Dispatch Optimizer
 
@@ -52,6 +54,15 @@ value factors, the merit-order slope (with the gas-price regime removed),
 negative-price hours, a curtailment proxy, and revenue impact, plus an
 interactive Streamlit dashboard.
 → [Repository](https://github.com/CodingxFaisal/renewable-cannibalization)
+
+### PV Market Value
+
+A pvlib model that simulates a PV plant's hourly output and values each design
+(fixed orientation, east-west, single-axis tracker) against real German
+day-ahead prices. It shows the revenue-optimal design is not the yield-optimal
+one, because prices move with the sun: a tracker wins on both energy and captured
+price, while facing west does not pay for a fixed array.
+→ [Repository](https://github.com/CodingxFaisal/pv-market-value)
 
 ---
 
