@@ -21,7 +21,7 @@ signal is real, and how renewables reshape the prices they depend on.
 economics, optimization (MILP), PV and renewable modelling, price forecasting,
 and market analytics.
 
-**Toolbox:** Python, pandas, NumPy, scikit-learn, PuLP, pvlib, FastAPI,
+**Toolbox:** Python, pandas, NumPy, scikit-learn, PuLP, HiGHS, pvlib, FastAPI,
 matplotlib, seaborn, Streamlit.
 
 ---
@@ -34,19 +34,24 @@ their assumptions.
 
 | Project | What it does | Headline result |
 |---|---|---|
-| [BESS Day-Ahead Dispatch Optimizer](https://github.com/CodingxFaisal/bess-dispatch-optimizer) | MILP optimization of a grid-scale battery trading day-ahead arbitrage | A gradient-boosting price forecast captures **84.5%** of the perfect-foresight revenue ceiling |
+| [GridFlex: BESS Dispatch & Day-Ahead Market Research](https://github.com/CodingxFaisal/bess-dispatch-optimizer) | Reproducible battery dispatch optimisation (MILP) and leakage-safe backtesting on the German day-ahead market | Trained price forecasts capture **83–84%** of perfect-foresight revenue over a 639-day hold-out |
 | [Power Spread Trader](https://github.com/CodingxFaisal/power-spread-trader) | Backtest of a cross-border spread mean-reversion strategy, with an honest test of whether the edge is real and realizable | Out-of-sample **Sharpe 5.45**, bounded by tradability rather than cost |
 | [Renewable Price Cannibalization](https://github.com/CodingxFaisal/renewable-cannibalization) | Analysis and dashboard of how solar and wind erode their own market value | Solar value factor falls from **0.93 (2019) to 0.59 (2024)** |
 | [PV Market Value](https://github.com/CodingxFaisal/pv-market-value) | Values PV plant designs against day-ahead prices, comparing energy yield with revenue | A single-axis tracker earns **~15% more revenue** than the yield-optimal fixed array |
 | [Day-Ahead Price Forecasting Service](https://github.com/CodingxFaisal/day-ahead-forecast-service) | A forecasting service with a full predict-score-retrain loop (FastAPI) | Day-ahead price forecast at about **6-7 EUR/MWh** mean absolute error |
 
-### BESS Day-Ahead Dispatch Optimizer
+### GridFlex: BESS Dispatch & Day-Ahead Market Research
 
-A grid-scale battery scheduled against real German day-ahead prices with a
-mixed-integer program (PuLP/CBC), covering round-trip efficiency, a daily cycle
-budget, and a derived degradation cost. The project measures how much revenue
-survives once perfect foresight is replaced by an actual price forecast, and adds
-a duration sweep and a walk-forward, no-lookahead backtest.
+A 10 MW / 20 MWh battery traded on the German day-ahead market, from raw SMARD
+data to a financial result. Price forecasts (persistence, seasonal naive,
+LEAR-style Lasso, gradient boosting) use only information published before the
+12:00 gate closure, enforced by publication-time guards and tested. A
+mixed-integer program (PuLP + HiGHS) builds each day's schedule, which is
+independently checked against the battery's physics and settled at the prices
+that actually cleared. On a 2024–2025 hold-out, forecast-driven dispatch earns
+**83–84%** of the perfect-foresight benchmark versus 43% for a simple heuristic.
+Includes finance and sensitivity analysis, a Streamlit viewer, 452 tests in CI,
+and a from-scratch reproduction that matched every result exactly.
 → [Repository](https://github.com/CodingxFaisal/bess-dispatch-optimizer)
 
 ### Power Spread Trader
